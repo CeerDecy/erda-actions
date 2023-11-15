@@ -93,6 +93,7 @@ type Service struct {
 	RetagImage       string   `json:"retagImage"`
 	RegistryUsername string   `json:"registryUsername"`
 	RegistryPassword string   `json:"registryPassword"`
+	NotRetag         bool     `json:"notRetag"` // 是否使用RetagImage对应的镜像仓库,默认false为使用RetagReg的镜像仓库,true为同时上传两个镜像仓库【默认镜像】和【Retag镜像】，
 }
 
 type MobileData struct {

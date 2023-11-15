@@ -86,6 +86,22 @@ func composeYaml(targetYml *diceyml.DiceYaml, env, envYmlFile string) error {
 	return nil
 }
 
+func useRetagImage(d *diceyml.DiceYaml, cfg *conf.Conf) {
+	diceServices := d.Services()
+	if diceServices == nil {
+		return
+	}
+	for k, service := range cfg.Services {
+		if diceServices[k] == nil {
+			continue
+		}
+		// NotRetag 默认为false，意思是使用retag中的镜像；在pipeline.yml中可以使用 notRetag: true 将值修改成true
+		if !service.NotRetag {
+			diceServices[k]["image"] = service.RetagImage
+		}
+	}
+}
+
 func insertCommands(d *diceyml.DiceYaml, cfg *conf.Conf) {
 	if d == nil {
 		return
